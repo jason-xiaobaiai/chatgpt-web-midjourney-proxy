@@ -263,5 +263,8 @@ export default {
     ,infoStar:'欢迎使用 ChatGPt Web！NextAI API购买可前往 <a  class="text-blue-600 dark:text-blue-500" href="https://nextai.win" target="_blank"> NextAI Shop </a>！ </p><p>支持 OpenAI 官方所有模型，以及市面上其他顶尖模型！设置模型名称后即可使用！'
     ,setBtSaveChat:'仅保存会话'
     ,setBtSaveSys: '保存至系统'
+
+    ,wsrvClose:'关闭 wsrv'
+    ,wsrvOpen:'开启 wsrv'
   }
 }
