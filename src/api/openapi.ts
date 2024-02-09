@@ -1,5 +1,5 @@
 
-import { gptConfigStore, gptServerStore, homeStore } from "@/store";
+import { gptConfigStore, gptServerStore, homeStore,useAuthStore } from "@/store";
 import { mlog,myTrim } from "./mjapi";
 import { fetchSSE } from "./sse/fetchsse";
 import axios from 'axios';
@@ -8,10 +8,12 @@ import { isNumber, isObject } from "@/utils/is";
 import { t } from "@/locales";
 import { ChatMessage } from "gpt-tokenizer/esm/GptEncoding";
 import { chatSetting } from "./chat";
+
 //import {encode,  encodeChat}  from "gpt-tokenizer"
 //import {encode,  encodeChat} from "gpt-tokenizer/cjs/encoding/cl100k_base.js";
 //import { get_encoding } from '@dqbd/tiktoken'
 //import FormData from 'form-data';
+
 
 export const KnowledgeCutOffDate: Record<string, string> = {
   default: "2021-09",
@@ -158,6 +160,8 @@ interface subModelType{
 }
 function getHeaderAuthorization(){
     if(!gptServerStore.myData.OPENAI_API_KEY){
+        const authStore = useAuthStore()
+        if( authStore.token ) return { 'x-ptoken':  authStore.token };
         return {}
     }
     return {
@@ -400,7 +404,7 @@ const getModelMax=( model:string )=>{
     model= model.toLowerCase();
     if( model.indexOf('8k')>-1  ){
         return 8;
-    }else if( model.indexOf('16k')>-1 || model=='gpt-3.5-turbo-1106' ){
+    }else if( model.indexOf('16k')>-1 || model=='gpt-3.5-turbo-1106' || model=='gpt-3.5-turbo-0125' ){
         return 16;
     }else if( model.indexOf('32k')>-1  ){
         return 32;
