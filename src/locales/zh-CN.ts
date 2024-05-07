@@ -94,7 +94,7 @@ export default {
     downloadError: '请检查网络状态与 JSON 文件有效性',
   },
 
-  
+
   mjset:{
     server:'服务端'
     ,about:'关于'
@@ -124,7 +124,7 @@ export default {
     ,draw:'绘图'
     ,submiting:'提交中'
     ,submit:'提交'
-    ,wait3:'请勿关闭! 图片生成中...' 
+    ,wait3:'请勿关闭! 图片生成中...'
     ,success:'保存成功'
     ,successTitle:'成功'
     ,modlePlaceholder:'自定义模型多个用空格隔开，不是必须'
@@ -166,7 +166,7 @@ export default {
     ,img2textinfo:'不知如何写提示词？用图生文试试！<br/>提交图片，出提示词'
     ,traning:'翻译中...'
     ,imgcreate:'生成图片'
-    ,imginfo:'其他参数：  <li>1 --no 忽略 --no car 图中不出现车 </li><li>2 --seed 可先获取种子 --seed 123456 </li> <li>3 --chaos 10 混合(范围：0-100)</li> <li>4 --tile 碎片化 </li>  <li>5 --sref 图片url 生成风格一致的图像  </li> '
+    ,imginfo:'其他参数：  <li>1 --no 忽略 --no car 图中不出现车 </li><li>2 --seed 可先获取种子 --seed 123456 </li> <li>3 --chaos 10 混合(范围：0-100)</li> <li>4 --tile 碎片化 </li>  <li>5 --cw 0 只参考五官, 100 参考五官、头发、服装等  </li>'
     ,tStyle:'风格'
     ,tView:'视角'
     ,tShot:'人物镜头'
@@ -183,6 +183,7 @@ export default {
     ,add2more:'请添加两张以上图片'
     ,no1m:'图片大小不能超过{m}M'
     ,imgExt:'图片仅支持jpg,gif,png,jpeg格式'
+    ,setSync:'同步Midjourney、Suno设置'
   },
   mj:{
     setOpen:'OpenAI 相关',
@@ -192,7 +193,7 @@ export default {
     ,setMj:'Midjourney 相关'
     ,setMjUrl:'Midjourney接口地址:'
     ,setMjKeyPlaceholder:'使用自定义 Api Secret 绕过密码访问限制'
-    ,setUploader:'上传相关' 
+    ,setUploader:'上传相关'
     ,setUploaderUrl:'上传地址:'
     ,setBtSave:'保存'
     ,setBtBack:'恢复默认'
@@ -206,7 +207,7 @@ export default {
     ,p15:'变焦1.5倍'
     ,p20:'变焦2倍'
     ,p100:'方正'
-    
+
     ,retry:'重分析'
     ,pan_left:'向左'
     ,pan_right:'向右'
@@ -214,7 +215,7 @@ export default {
     ,pan_down:'向下'
     ,up2:'高清2倍'
     ,up4:'高清4倍',
-    
+
     thinking:'思考中...'
     ,noReUpload:'不能重复上传'
     ,uploading:'上传中...'
@@ -222,21 +223,21 @@ export default {
     ,uploadFail:'上传失败:'
     ,upPdf:'<span>上传图片、附件<br/>能上传图片、PDF、EXCEL等文档</span><p>支持拖拽</p>'
     ,upImg:'<span><b>上传图片</b><br/>会自动调用 gpt-4-vision-preview 模型<br>注意：会有额外的图片费用<br/>格式: jpeg jpg png gif</span><p>支持拖拽</p> <p class="pt-2"><b>上传MP3 MP4</b> <br>会自动直接调用 whisper-1 模型<br>格式有：mp3 mp4 mpeg mpga m4a wav webm</p>'
-    ,clearAll:'清参数'  
+    ,clearAll:'清参数'
     ,czoom:'自定义'
     ,customTitle:'自定义变焦'
     ,zoominfo:'修改zoom值,范围在 1.0~2.0 默认设置为1.8',
-    
+
     modleSuccess:'模型加载成功'
     ,setingSuccess:'设置成功'
 
     ,tokenInfo1:'剩余Tokens = 模型长度 - 角色设定 - 上下文(会话历史) - 回复数 - 当前输入'
     ,tokenInfo2:'角色设定留空，系统会给一个默认的'
     ,noSuppertModel:'刷新，暂不支持此模型！'
-    ,failOcr:'识别失败' 
-    ,remain:'剩:' 
-    
-    ,totalUsage:'订阅总额' 
+    ,failOcr:'识别失败'
+    ,remain:'剩:'
+
+    ,totalUsage:'订阅总额'
     ,disableGpt4:'已禁用GPT4'
     ,setTextInfo:'OpenAi Api Key 错误，点击这里重新'
 
@@ -280,6 +281,133 @@ export default {
     ,typing:'正在输入'
 
     ,authErro:'授权失败'
-    ,authBt:'请重新授权'
+    ,authBt:'请重新输入授权访问密码'
+
+    ,micWhisper:'Whisper语音识别'
+    ,micAsr:'即时识别'
+    ,micRec:'开始录音,请说话！2秒内无声音将自动关闭'
+    ,micRecEnd:'录音已结束'
+
+    
+
+  },
+
+	draw: {
+		qualityList: {
+			general: "一般",
+			clear: "清晰",
+			hd: "高清",
+			ultraHd: "超高清",
+		},
+		styleList: {
+			cyberpunk: "赛博朋克",
+			star: "星际",
+			anime: "动漫",
+			japaneseComicsManga: "日本漫画",
+			inkWashPaintingStyle: "水墨画风格",
+			original: "原创",
+			landscape: "风景画",
+			illustration: "插画",
+			manga: "漫画",
+			modernOrganic: "现代自然",
+			genesis: "创世纪",
+			posterstyle: "海报风格",
+			surrealism: "超现实主义",
+			sketch: "素描",
+			realism: "写实",
+			watercolorPainting: "水彩画",
+			cubism: "立体主义",
+			blackAndWhite: "黑白",
+			fmPhotography: "胶片摄影风格",
+			cinematic: "电影化",
+			clearFacialFeatures: "清晰的面部特征",
+		},
+		viewList: {
+			wideView: "宽视角",
+			birdView: "鸟瞰视角",
+			topView: "顶视角",
+			upview: "仰视角",
+			frontView: "正面视角",
+			headshot: "头部特写",
+			ultrawideshot: "超广角视角",
+			mediumShot: "中景",
+			longShot: "远景",
+			depthOfField: "景深",
+		},
+		shotList: {
+			faceShot: "脸部特写",
+			bigCloseUp: "大特写",
+			closeUp: "特写",
+			waistShot: "腰部以上",
+			kneeShot: "膝盖以上",
+			fullLengthShot: "全身照",
+			extraLongShot: "极远景",
+		},
+		stylesList: {
+			styleLow: "低强度风格",
+			styleMed: "中等强度风格",
+			styleHigh: "高强度风格",
+			styleVeryHigh: "非常高强度风格",
+		},
+		lightList: {
+			coldLight: "冷光",
+			warmLight: "暖光",
+			hardLighting: "硬光",
+			dramaticLight: "戏剧性光线",
+			reflectionLight: "反射光",
+			mistyFoggy: "薄雾",
+			naturalLight: "自然光",
+			sunLight: "阳光",
+			moody: "情绪化",
+		},
+		versionList: {
+			mjV6: "MJ V6",
+			mjV52: "MJ V5.2",
+			mjV51: "MJ V5.1",
+			nijiV6: "Niji V6",
+			nijiV5: "Niji V5",
+			nijiV4: "Niji V4",
+			nijiJourney: "Niji Journey",
+		},
+		botList: {
+			midjourneyBot: "Midjourney 机器人",
+			nijiJourney: "Niji Journey",
+		},
+		dimensionsList: {
+			square: "正方形 (1:1)",
+			portrait: "肖像 (2:3)",
+			landscape: "风景 (3:2)",
+		},
+	}
+
+  ,suno:{
+    description:"描述模式"
+    ,custom:"定制模式"
+    ,style:'歌曲风格'
+    ,stylepls:'歌曲名称比如:流行音乐'
+    ,emputy:'暂无内容'
+    ,noly:'无歌词'
+    ,inputly:'请输入歌曲名称或歌词'
+    ,doingly:"正在执行请稍后."
+    ,doingly2: "正在获取歌词..."
+    ,title:'歌曲名称'
+    ,titlepls:'歌曲名称比如:假期'
+    ,desc:'歌曲描述'
+    ,descpls:'歌曲描述 比如:关于假期的原声流行音乐'
+    ,noneedly:'无需歌词'
+    ,rank:'随机获取'
+    ,ly:'歌词'
+    ,lypls:'歌词:有一定的格式'
+    ,generate:'创作歌曲'
+    ,generately:'生成歌词'
+    ,nodata:'请先创作才有歌曲列表'
+
+    ,menu:'音乐'
+    ,menuinfo:'Suno 音乐创作'
+    ,server:'Suno 接口地址'
+    ,serverabout:'Suno 相关'
+    ,setOpenKeyPlaceholder:'Suno API 的相关KEY；可不填'
   }
+
+
 }

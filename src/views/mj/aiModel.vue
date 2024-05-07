@@ -14,9 +14,11 @@ const chatSet = new chatSetting( uuid==null?1002:uuid);
 const nGptStore = ref(  chatSet.getGptConfig() );
 
 const config = ref({
-model:[ 'gpt-4-0125-preview','gpt-3.5-turbo',`gpt-4-1106-preview`,`gpt-3.5-turbo-16k`,'gpt-4','gpt-4-0613','gpt-4-32k-0613' ,'gpt-4-32k','gpt-4-32k-0314',`gpt-3.5-turbo-16k-0613`
+model:[ 'gpt-4-turbo-2024-04-09','gpt-4-0125-preview','gpt-3.5-turbo',`gpt-4-1106-preview`,`gpt-3.5-turbo-16k`,'gpt-4','gpt-4-0613','gpt-4-32k-0613' ,'gpt-4-32k','gpt-4-32k-0314',`gpt-3.5-turbo-16k-0613`
 ,`gpt-4-vision-preview`,`gpt-3.5-turbo-1106` ,'gpt-3.5-turbo-0125'
-,'gpt-3.5-turbo-0301','gpt-3.5-turbo-0613','gpt-4-all','gpt-3.5-net','gemini-pro']
+,'gpt-3.5-turbo-0301','gpt-3.5-turbo-0613','gpt-4-all','gpt-3.5-net','gemini-pro','gemini-pro-1.5'
+,'claude-3-sonnet-20240229','claude-3-opus-20240229','claude-3-haiku-20240229','suno-v3'
+]
 ,maxToken:2048
 }); 
 const st= ref({openMore:false });
@@ -36,7 +38,7 @@ const modellist = computed(() => { //
         //     return self.indexOf(value) === index;
         // });
         for(let o of arr ){
-             rz.push({label:o,value:o})
+            o && rz.push({label:o,value:o})
         }
     }
     //服务端的 CUSTOM_MODELS 设置
@@ -62,17 +64,16 @@ const modellist = computed(() => { //
     return uniqueArray ;
 });
 const ms= useMessage();
-const save = ()=>{ 
-    gptConfigStore.setMyData( nGptStore.value );
-    ms.success( t('common.saveSuccess')); //'保存成功'
-    emit('close');
-}
-const saveChat=()=>{
+// const save = ()=>{ 
+//     gptConfigStore.setMyData( nGptStore.value );
+//     ms.success( t('common.saveSuccess')); //'保存成功'
+//     emit('close');
+// }
+const saveChat=(type:string)=>{
      chatSet.save(  nGptStore.value );
-     homeStore.setMyData({act:'saveChat'});
-     //gptConfigStore.setInit(); //恢复下默认
-     //gptConfigStore.myData.systemMessage= '';
-     ms.success( t('common.saveSuccess'));
+     gptConfigStore.setMyData( nGptStore.value );
+     homeStore.setMyData({act:'saveChat'}); 
+     if(type!='hide')ms.success( t('common.saveSuccess'));
      emit('close');
 }
  
@@ -83,6 +84,8 @@ watch(()=>nGptStore.value.model,(n)=>{
         max=4096;
     }else if( n.indexOf('gpt-4')>-1 ||  n.indexOf('16k')>-1 ){ //['16k','8k','32k','gpt-4'].indexOf(n)>-1
         max=4096*2;
+    }else if( n.toLowerCase().includes('claude-3') ){
+         max=4096*2;
     }
     config.value.maxToken=max/2;
     if(nGptStore.value.max_tokens> config.value.maxToken ) nGptStore.value.max_tokens= config.value.maxToken;
@@ -97,6 +100,9 @@ onMounted(() => {
     //gptConfigStore.myData= chatSet.getGptConfig();
 });
 
+//数组去重
+
+
 
 //
 //const f= ref({model:gptConfigStore.myData.model});
@@ -104,10 +110,10 @@ onMounted(() => {
 <template>
 <section class="mb-4 flex justify-between items-center"  >
      <div ><span class="text-red-500">*</span>  {{ $t('mjset.model') }}</div>
-    <n-select v-model:value="nGptStore.model" :options="modellist" size="small"  class="!w-[50%]"   />
+    <n-select v-model:value="nGptStore.model" :options="modellist" size="small"  filterable  class="!w-[50%]"   />
 </section>
 <section class="mb-4 flex justify-between items-center"  >
-    <n-input   :placeholder="$t('mjchat.modlePlaceholder')" v-model:value="nGptStore.userModel">
+    <n-input   :placeholder="$t('mjchat.modlePlaceholder')" v-model:value="gptConfigStore.myData.userModel">
       <template #prefix>
         {{ $t('mjchat.myModle') }}
       </template>
@@ -193,7 +199,8 @@ onMounted(() => {
 
  <section class=" text-right flex justify-end space-x-2"  >
     <NButton   @click="reSet()">{{ $t('mj.setBtBack') }}</NButton>
-    <NButton type="primary" @click="saveChat">{{ $t('mj.setBtSaveChat') }}</NButton>
-    <NButton type="primary" @click="save">{{ $t('mj.setBtSaveSys') }}</NButton>
+    <!-- <NButton type="primary" @click="saveChat">{{ $t('mj.setBtSaveChat') }}</NButton>
+    <NButton type="primary" @click="save">{{ $t('mj.setBtSaveSys') }}</NButton> -->
+    <NButton type="primary" @click="saveChat('no')">{{ $t('common.save') }}</NButton>
  </section>
 </template>

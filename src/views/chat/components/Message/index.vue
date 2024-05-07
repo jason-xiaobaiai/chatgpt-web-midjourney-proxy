@@ -24,6 +24,7 @@ interface Props {
 interface Emit {
   (ev: 'regenerate'): void
   (ev: 'delete'): void
+  (ev: 'edit'): void
 }
 
 const props = defineProps<Props>()
@@ -38,7 +39,7 @@ const message = useMessage()
 
 const textRef = ref<HTMLElement>()
 
-const asRawText = ref(props.inversion)
+const asRawText = ref(props.inversion && homeStore.myData.session.isCloseMdPreview)
 
 const messageRef = ref<HTMLElement>()
 
@@ -53,6 +54,11 @@ const options = computed(() => {
       label: t('common.delete'),
       key: 'delete',
       icon: iconRender({ icon: 'ri:delete-bin-line' }),
+    },
+    {
+      label: t('common.edit'),
+      key: 'edit',
+      icon: iconRender({ icon: 'ri:edit-2-line' }),
     },
   ]
 
@@ -72,7 +78,7 @@ const options = computed(() => {
   return common
 })
 
-function handleSelect(key: 'copyText' | 'delete' | 'toggleRenderType' |'tts') {
+function handleSelect(key: 'copyText' | 'delete' | 'edit' | 'toggleRenderType' | 'tts') {
   switch (key) {
     case 'tts': 
       homeStore.setMyData({act:'gpt.ttsv2', actData:{ index:props.index , uuid:props.chat.uuid, text:props.text } });
@@ -85,6 +91,9 @@ function handleSelect(key: 'copyText' | 'delete' | 'toggleRenderType' |'tts') {
       return
     case 'delete':
       emit('delete')
+      return
+    case 'edit':
+      emit('edit')
   }
 }
 

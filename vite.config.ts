@@ -3,10 +3,19 @@ import type { PluginOption } from 'vite'
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { VitePWA } from 'vite-plugin-pwa'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 function setupPlugins(env: ImportMetaEnv): PluginOption[] {
   return [
     vue(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: path.resolve(__dirname, './src/static/mitf') + '/[!.]*', // 1️⃣
+          dest: './mitf/', // 2️⃣
+        },
+      ],
+    }),
     VitePWA({ // env.VITE_GLOB_APP_PWA === 'true' &&
       injectRegister: 'auto',
       manifest: {
@@ -45,6 +54,10 @@ export default defineConfig((env) => {
           target: viteEnv.VITE_APP_API_BASE_URL,
           changeOrigin: true, // 允许跨域
           //rewrite: path => path.replace('/api/', '/'),
+        },
+         '/sunoapi': {
+          target: viteEnv.VITE_APP_API_BASE_URL,
+          changeOrigin: true, // 允许跨域  
         },
          '/uploads': {
           target: viteEnv.VITE_APP_API_BASE_URL,

@@ -21,6 +21,8 @@ module.exports = (req, res) => {
             ,uploadImgSize: process.env.UPLOAD_IMG_SIZE?? "1" 
             ,gptUrl : process.env.GPT_URL?? ""
             ,theme : process.env.SYS_THEME?? "dark"
+            ,isCloseMdPreview : process.env.CLOSE_MD_PREVIEW?true:false
+            ,menuDisable: process.env.MENU_DISABLE??""
 
         }
     }
